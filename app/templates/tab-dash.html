@@ -1,28 +1,48 @@
 <ion-view view-title="Dashboard">
-  <ion-content class="padding">
+<ion-content class="padding">
+<button class="button icon ion-ios7-search button-clear" ng-click="openModal()"></button>
+<div class="list card" on-swipe-left="generateBar()">
+  <center>
+  <h1>{{random.name}}</h1>
+  <h1>{{random.distance}}</h1>
+  <h2>{{random.deals[0].title}}</h2>
+  <h2>{{random.deals[0].what_you_get}}</h2>
+  <h2>{{random.deals[0].url}}</h2>
+  <button ng-click="showAddress()"><span ng-show='address' ng-hide='(!address)'>Hide</span><span ng-show='(!address)' ng-hide='address'>Show</span> Address</button><br>
+  <div ng-show="address" ng-repeat='location in random.location.address'>{{location}}</div>
+  <br>
+  <button ng-click="generateBar()">Next Bar Please</button>
+  <div ng-repeat = 'bar in bars'>{{bar.name}}</div>
+  <div><button ng-click='dealToggle()'>Deal filter</button></div>
+  <div><button ng-click="food()">food filter</button></div>
+  </center>
+</div>
+
+  <script id="my-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+    <i class="button icon ion-arrow-left-c button-clear" ng-click="closeModal()"></i>
+      <h1 class="title">Search Preferences</h1>
+    </ion-header-bar>
+    <ion-content>
+
     <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
-      </div>
-    </div>
-  </ion-content>
+   <ion-toggle ng-model="loca.search" ng-change="food()" toggle-class="toggle-calm">
+
+   {{search}}</ion-toggle>
+   </div>
+
+
+
+   <div class="list card">
+
+   <ion-toggle ng-model="dealSearch" ng-change="dealToggle()" toggle-class="toggle-calm">{{dealSearch}}</ion-toggle>
+   </div>
+    </ion-content>
+  </ion-modal-view>
+</script>
+
+
+
+</ion-content>
 </ion-view>
