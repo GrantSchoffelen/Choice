@@ -1,43 +1,73 @@
 <ion-view view-title="Dashboard">
-<ion-content class="padding">
-<button class="button icon ion-ios7-search button-clear" ng-click="openModal()"></button>
-<div class="list card" on-swipe-left="generateBar()">
-  <center>
-  <h1>{{random.name}}</h1>
-  <h1>{{random.distance}}</h1>
-  <h2>{{random.deals[0].title}}</h2>
-  <h2>{{random.deals[0].what_you_get}}</h2>
-  <h2>{{random.deals[0].url}}</h2>
-  <button ng-click="showAddress()"><span ng-show='address' ng-hide='(!address)'>Hide</span><span ng-show='(!address)' ng-hide='address'>Show</span> Address</button><br>
-  <div ng-show="address" ng-repeat='location in random.location.address'>{{location}}</div>
-  <br>
-  <button ng-click="generateBar()">Next Bar Please</button>
-  <div ng-repeat = 'bar in bars'>{{bar.name}}</div>
-  <div><button ng-click='dealToggle()'>Deal filter</button></div>
-  <div><button ng-click="food()">food filter</button></div>
-  </center>
+<div class="bar bar-header bar-positive">
+     <h1 class="title">{{search}} Search</h1>
+    <button class="button icon ion-ios7-search button-clear" ng-click="openModal()"></button>
+</div>
+
+<ion-content class="padding" style="top: 50px;">
+<div ng-show="loading">
+    <center><h3> Searching for {{search}}</h3></center>
+      <img class="responsive" style="width: 95%;" src = '/images/loading.gif'>
+
+  </div>
+
+<div ng-show="!loading">
+<div class="list card" on-swipe-left="generateBar()" on-swipe-right="generateBar()">
+
+      <div class="item item-divider">
+             <center><h1 style="color: #499EC9;">{{random.name}}</h1>
+             <h2 style="font-style: italic;">{{random.distance}}</h2>
+             <img src= "{{random.rating_img_url}}">
+             <h2 style="font-style: italic;">{{random.price}}</h2>
+             </center>
+      </div>
+    <!--   <div class="item item-text-wrap" >
+            <center><p style= "font-style: italic;">{{random.distance}} </p></center>
+      </div> -->
+
+          <div class="item item-body">
+            <p style="font-style: italic;">{{random.snippet_text}}</p>
+            <h6>{{random.deals[0].what_you_get}}</h6>
+            
+  <strong><p style="color: #499EC9; font-style: italic;">Address - </p></strong> 
+  <div ng-repeat='location in random.location.display_address'>
+           {{location}}
+          </div>
+
+   <button class ="button button-outline button-positive" ng-click="showAddress()"><span ng-show='address' ng-hide='(!address)'><i class="icon ion-home"></i> Hide Deals</span> <span ng-show='(!address)' ng-hide='address'><i class="icon ion-home"></i> View Deals</button><br>
+   </div>
+
+
+
+</div>
 </div>
 
   <script id="my-modal.html" type="text/ng-template">
   <ion-modal-view>
-    <ion-header-bar>
-    <i class="button icon ion-arrow-left-c button-clear" ng-click="closeModal()"></i>
-      <h1 class="title">Search Preferences</h1>
-    </ion-header-bar>
-    <ion-content>
+    <div class="bar bar-header bar-positive">
+    <button class="button icon ion-arrow-left-c button-clear" ng-click="closeModal()"></button>
+     <h1 class="title">Search Preferences</h1>
+</div>
+
+    <ion-content style="top: 50px;">
 
     <div class="list card">
-   <ion-toggle ng-model="loca.search" ng-change="food()" toggle-class="toggle-calm">
-
-   {{search}}</ion-toggle>
+    <center><h3 class="title">Search For {{loca.search}}</h3>
+    </center>
+   <ion-toggle ng-model="search" ng-change="food()" toggle-class="toggle">
+   {{loca.search}}</ion-toggle>
    </div>
+
 
 
 
    <div class="list card">
-
-   <ion-toggle ng-model="dealSearch" ng-change="dealToggle()" toggle-class="toggle-calm">{{dealSearch}}</ion-toggle>
+   <center>
+   <h3 class="title">Search For Places With Deals Only</h3>
+   </center>
+   <ion-toggle ng-model="dealSearch" ng-change="dealToggle()" toggle-class="toggle-calm">{{deal}}</ion-toggle>
    </div>
+
     </ion-content>
   </ion-modal-view>
 </script>

@@ -21,9 +21,10 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
   $scope.random;
   $scope.loca;
   $scope.dealSearch = false;
+  $scope.deal = "False"
   $scope.counter = 0;
-  $scope.search = 'bar'; 
-
+  $scope.search = 'Bar'; 
+  $scope.loading =true; 
   $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
@@ -31,15 +32,15 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
       $scope.loca.search = $scope.search
       $scope.loca.offset = $scope.counter;
       $http.post('http://localhost:9000/api/yelps/yelp', $scope.loca).success(function(bars) {
-        for (var i = 0; i < bars.businesses.length; i++) {
-          var distance = (bars.businesses[i].distance * 0.00062137).toString()
+        for (var i = 0; i < bars.length; i++) {
+          var distance = (bars[i].distance * 0.00062137).toString()
           var miles = distance.substring(0, 4) + "  Miles Away"
-          bars.businesses[i].distance = miles
+          bars[i].distance = miles
         }
-        $scope.bars = bars.businesses
+        $scope.bars = bars
         $scope.generateBar()
         $scope.wait = false;
-        console.log(bars)
+        $scope.loading = false;
       })
     })
 
@@ -47,8 +48,10 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
   $scope.dealToggle = function() {
     if ($scope.dealSearch === false) {
       $scope.dealSearch = true;
+      $scope.deal = "True"
     } else {
       $scope.dealSearch = false
+      $scope.deal = "False"
     }
     $scope.bars = []
     $scope.random = $scope.bars[0]
@@ -56,10 +59,10 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
   }
 
     $scope.food = function() {
-    if ($scope.search === 'bar') {
-      $scope.search = 'food';
+    if ($scope.search === 'Bar') {
+      $scope.search = 'Food';
     } else {
-      $scope.search = 'bar'
+      $scope.search = 'Bar'
     }
     $scope.bars = []
     $scope.random = $scope.bars[0]
@@ -69,6 +72,7 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
   $scope.generateBar = function() {
     var index = Math.floor(Math.random() * $scope.bars.length);
     $scope.random = $scope.bars[index];
+    console.log($scope.random)
     $scope.bars.splice(index, 1)
     $scope.counter++
       if (!$scope.random) {
@@ -77,15 +81,14 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
         $scope.loca.offset = $scope.counter - 1;
         $scope.wait = true;
         $http.post('http://localhost:9000/api/yelps/yelp', $scope.loca).success(function(bars) {
-          for (var i = 0; i < bars.businesses.length; i++) {
-            var distance = (bars.businesses[i].distance * 0.00062137).toString()
+          for (var i = 0; i < bars.length; i++) {
+            var distance = (bars[i].distance * 0.00062137).toString()
             var miles = distance.substring(0, 4) + "  Miles Away"
-            bars.businesses[i].distance = miles
+            bars[i].distance = miles
           }
-          console.log(bars.businesses)
-          $scope.bars = bars.businesses
+          $scope.bars = bars
           $scope.generateBar()
-          $scope.wait = false;
+          $scope.wait = false; 
         })
       }
     $scope.address = false;
