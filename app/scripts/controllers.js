@@ -24,7 +24,7 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
   $scope.deal = "False"
   $scope.counter = 0;
   $scope.search = 'Bar'; 
-  $scope.loading =false
+  $scope.loading =true; 
   $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
