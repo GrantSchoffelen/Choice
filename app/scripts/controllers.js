@@ -24,7 +24,7 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
   $scope.deal = "False"
   $scope.counter = 0;
   $scope.search = 'Bar'; 
-  $scope.loading =true; 
+  $scope.loading =false
   $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
@@ -32,7 +32,7 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
       $scope.loca = position
       $scope.loca.search = $scope.search
       $scope.loca.offset = $scope.counter;
-      $http.post('http://localhost:9000/api/yelps/yelp', $scope.loca).success(function(bars) {
+      $http.post('https://barsies.herokuapp.com/api/yelps/yelp', $scope.loca).success(function(bars) {
         for (var i = 0; i < bars.length; i++) {
           var distance = (bars[i].distance * 0.00062137).toString()
           var miles = distance.substring(0, 4) + "  Miles Away"
@@ -83,7 +83,7 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
         $scope.loca.deal = $scope.dealSearch
         $scope.loca.offset = $scope.counter - 1;
         $scope.wait = true;
-        $http.post('http://localhost:9000/api/yelps/yelp', $scope.loca).success(function(bars) {
+        $http.post('https://barsies.herokuapp.com/api/yelps/yelp', $scope.loca).success(function(bars) {
           for (var i = 0; i < bars.length; i++) {
             var distance = (bars[i].distance * 0.00062137).toString()
             var miles = distance.substring(0, 4) + "  Miles Away"
