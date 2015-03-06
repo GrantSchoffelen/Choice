@@ -5,7 +5,7 @@
 </div>
 
 <ion-content class="padding" style="top: 50px;">
-<div ng-show="loading">
+<div class="list card" ng-show="loading">
     <center><h3> Searching for {{search}}</h3></center>
       <img class="responsive" style="width: 95%;" src = '/images/loading.gif'>
 
@@ -18,8 +18,9 @@
              <center><h1 style="color: #499EC9;">{{random.name}}</h1>
              <h2 style="font-style: italic;">{{random.distance}}</h2>
              <img src= "{{random.rating_img_url}}">
-             <h3 style="font-style: italic;">{{random.price}} - {{random.priceRange}}</h3>
+             <h3 style="font-style: italic;"><span style="color:green"><strong>{{random.price}}</strong></span> - {{random.priceRange}}</h3>
              <h3>{{random.hours}}</h3>
+
              </center>
       </div>
     <!--   <div class="item item-text-wrap" >
@@ -27,17 +28,23 @@
       </div> -->
 
           <div class="item item-body">
-            <p style="font-style: italic;">{{random.snippet_text}}</p>
-            <h6>{{random.deals[0].what_you_get}}</h6>
+              <strong><p style="color: #499EC9; font-style: italic; margin-bottom: -15px">Testimonial -</p></strong> 
+            <p style="font-style: italic;">"{{random.snippet_text}}"</p>
+
             
   <strong><p style="color: #499EC9; font-style: italic;">Address - </p></strong> 
   <div ng-repeat='location in random.location.display_address'>
            {{location}}
           </div>
+<div ng-show="random.deals">
+<center> 
+   <button class ="button button-outline button-positive" ng-click="showDeals()"><span ng-show='deals' ng-hide='(!deals)'><i class="icon ion-home"></i> Hide Deals</span> <span ng-show='(!deals)' ng-hide='deals'><i class="icon ion-home"></i> View Deals</button><br>
+</center>
 
-   <button class ="button button-outline button-positive" ng-click="showAddress()"><span ng-show='address' ng-hide='(!address)'><i class="icon ion-home"></i> Hide Deals</span> <span ng-show='(!address)' ng-hide='address'><i class="icon ion-home"></i> View Deals</button><br>
+<strong><p style="color: #499EC9; font-style: italic; margin-bottom: -15px">Deals -</p></strong> 
+<h6 ng-show='deals' ng-hide='(!deals)'>{{random.deals[0].what_you_get}}</h6>
    </div>
-
+</div> 
 
 
 </div>

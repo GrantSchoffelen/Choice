@@ -28,6 +28,7 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
   $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
+      console.log(position)
       $scope.loca = position
       $scope.loca.search = $scope.search
       $scope.loca.offset = $scope.counter;
@@ -70,12 +71,14 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
   }
 
   $scope.generateBar = function() {
+   
     var index = Math.floor(Math.random() * $scope.bars.length);
     $scope.random = $scope.bars[index];
     console.log($scope.random)
     $scope.bars.splice(index, 1)
     $scope.counter++
       if (!$scope.random) {
+        $scope.loading = true; 
         $scope.loca.search = $scope.search
         $scope.loca.deal = $scope.dealSearch
         $scope.loca.offset = $scope.counter - 1;
@@ -87,18 +90,20 @@ $ionicModal.fromTemplateUrl('my-modal.html', {
             bars[i].distance = miles
           }
           $scope.bars = bars
+          $scope.loading = false; 
           $scope.generateBar()
           $scope.wait = false; 
         })
       }
-    $scope.address = false;
+      
+    $scope.deals = false;
   }
 
-  $scope.showAddress = function() {
-    if ($scope.address === false) {
-      $scope.address = true
+  $scope.showDeals = function() {
+    if ($scope.deals === false) {
+      $scope.deals = true
     } else {
-      $scope.address = false;
+      $scope.deals = false;
     }
   }
 })
